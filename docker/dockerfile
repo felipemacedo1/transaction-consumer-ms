@@ -1,0 +1,23 @@
+# Dockerfile for transaction-consumer-ms
+
+# Step 1: Use the official Golang image as a base
+FROM golang:1.20-alpine
+
+# Step 2: Set the working directory inside the container
+WORKDIR /app
+
+# Step 3: Copy the go.mod and go.sum files and download dependencies
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Step 4: Copy the source code into the container
+COPY . .
+
+# Step 5: Build the Go binary
+RUN go build -o transaction-consumer-ms ./cmd/main.go
+
+# Step 6: Expose the port if necessary (adjust if your service exposes any port)
+# EXPOSE 8080
+
+# Step 7: Command to run the application
+CMD ["./transaction-consumer-ms"]
